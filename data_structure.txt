@@ -1,0 +1,1087 @@
+선형 구조
+	-비슷한  형태의 자료들을 연속적인 공간에 순서대로 지정하는 자료구조
+	-자료들의 앞뒤 관계가 1:1
+	-배열, 스택,큐, 리스트 등이 있음
+배열
+	1)배열의 특징
+	
+	*-배열의 이름은 배열의 첫 번째 요소의 주소
+	같은 자료형들을  연속된 공관에 저장한 형태의 성형 구조(반복적이고 많은 자료를 처리할 때 사용)
+	여러 개의 변수X 하나의 이름O
+	연속적인 메모리 공간, 논리적 구조가 물리적 위치와 동일
+	사용자가 쉽게 찾을수 있고, 많은 양의 하나의 이름으로 저장
+	원소 삽입, 삭제시 시간이 많이 걸림
+	
+	2)배열의활용
+	
+	첨자를 이용하여 저장한다
+	원소 참조: 변수명[개수]
+	인덱스가 넘으면run-timeerror발생
+	배열의 이름 지정= 배열의 첫 번째 요소의 주소를 지정하는 것과 같다
+	개수:sizeof(배열명)/sizeof(배열자료형)
+	
+	index참조       | 0 | 1 | 2 | 3 |
+	array[참조번호] |   |   |   |   |
+	
+1차원 배열
+	개념: 1차원 배열은 변수들을 일직선상의 개념으로 조합한 배열
+	형식:int array [10]; 배열 자료형   배열 이름  [배열 길이]
+	
+	배열 선언시에는 모든 요소를 초기화 할 수 있음
+	int a[3]={1,2};원소 중 일부만 주어진 값으로 초기화되고, 나머지는 0으로 초기화 됨
+	int a[3]={0} 모두 0으로 초기화 됨
+	int a[];초기화가 없는데 배열 길이가 생략됨
+	
+배열의 초기화
+	1)개념
+	배열선언시 초값을 지정할수 있다
+	배열의 크기 생략시 최기값을 반디시 지정
+	// 예제1 배열의 선언과 출력
+	#include <stdio.h>
+	int main(){
+		int array[5];
+		int nums[] = { 1,2,3,4,5};//크기 생략 초기값 지정
+		float values[5] = {0};
+		int i;
+		for(i=0; i<5; i++){
+			printf("%d %d %.2f\n", array[i], nums[i], values[i]);
+		}
+		return 0;
+	}
+
+
+
+문자열과 배열
+	문자열
+	1)개념:큰따움표("")로 묶인 글자는 글자수와 상관없이 문자열로 처리
+	문자는 배열과 포인터로 저장(문자열을 저장 자료형X )
+
+	2)형식
+	char 배열이름[크기]="문자열";
+	배열로 문자를 자장시 초기값으로 지정해야한다
+	이미 선언된 배열에는 저장X
+	.문자의 배열: Null문자('\0')로 그 끝을 표시하는 자료형
+	.문자열""를 이용하여 초기화 할 수 있음.
+	예)char str[6]="hello";
+	.문자열의 길이
+
+	-Null 문자를 제외하지만 실제 필요한 메모리크기는 *(문자열 길이+1)
+
+	.printf(), scanf()
+	-문자열 포맷문자 %s
+
+2.표준 문자 처리 함수:<ctype.h>
+	
+
+3.포인터와 문자열
+	1)문자열 상수의 구현
+	.컴파일 과정에서 문자열은 char 배열 형태로 따로 보관
+	.문자열 상수가 있던 곳에는 배열의 위치값을 사용
+	.문자열은 char배열의 구조를 가지며 첫 번째 문자의 주소(포인터)의 값으로 사용된
+	
+	주소	F8       F9       FA      FB       FC    FD
+	값	a	p	p	l	e	\0
+
+	char* a="apple";
+	printf("주소값:%p",a); //'a'가 저장된 주소(F8)출력 (%p는 16진수 출력)
+	
+	printf("주소값:%p",a+1);//'p'가 저장된 주소(F9)출력
+	
+	2)char 포인터로 문자열 사용
+	.문자열은 주소이므로 char포인터에 대입하여 사용 가능
+	
+	a="banana";
+	printf("%s\n",a);
+	while(*a != '\0'){
+		printf("%c",*a);
+		a++;
+	}// banana가 출력 됨
+	
+	3)scanf함수를 사용한 문자열 입력
+	char str[80];
+	scanf("%s",str);
+	printf("%s\n",str);
+	scanf("%s",str);
+	printf("%s\n",str);
+	str 입력된 문자가 출력됨
+	
+	char* a="apple";
+	scanf("%s", a);//사용 불가능
+	
+	.scanf함수로 입력받능 문자열은 [enter]시 버퍼에 저장되고, 
+	버퍼에서 문자열을 가져와 배열에 저장
+
+	버퍼
+	일력 받은 값= a |p | p | l | e |  | j | a | m | \n |
+	
+	[str배열]scanf("%s",str);
+	str 저장된 값 = a | p | p | l | e | \0 |
+
+	scanf("%s",str);
+	str 저장된 값= j | a | m | \0 | e | \0 |
+	
+	
+	4)fgets함수를 사용한 문자열 입력
+
+	fgets(문자배열병,배열의 크기,stdin);
+	.문자배열 크기확인 가능,문자가 배열크기를 넘어설 위험이 없음
+	.문자배열의 마지막에 기행문자(\n),널문자(\0)를 저장
+
+	char str[80];
+	fgets(str, sizeof(str), stdin);//입력 apple jam
+	printf("%s입니다",str);	
+
+	a | p | p | l | e | | j | a | m | \n | \0
+
+	개행문자 제거 str[strlen(str)-1]='\0'사용 하면 \n이 없어진다.
+	
+	5)문자열을 출력하는 puts,fputs 함수
+
+	문자열만을 출력할 때 사용, 정상출력시 0,출력 실패시 -1(EOF)를 반환
+	puts 함수: 문자열을 출력하고 자동 줄바꿈
+	
+	puts(문자배열명); //함수원형int puts(const cahr* str);
+	
+	fputs 함수: 문자열을 출력하고 줄바꾸지 않음
+
+	fputs 함수: 문자열을 출력하고 줄바꾸지 않음
+
+	fputs(문자배열명,stdout);//함수원형infputs(const cahr* str,FILE* stream)
+	
+문자열과 배열 차이
+	char s1[]="ABC";
+	char s2[]={'A','B','C'};
+	s1배열은  = | A | B | C | \0 |
+	s2배열은  = | A | B | C |
+	
+	ex)
+	// 예제1
+	#include <stdio.h>
+	int main(){
+		char *a="banana";//문자열 상수
+		char b[]="banana";
+		//scanf("%s",&a);//error발생
+		scanf("%s",b);//scanf는 공백문자 압에까지만 받는다
+		printf("%s\n",a);
+		for(int i=0;a[i]!='\0';i++){
+			printf("%c",b[i]);
+	}
+	/*
+	a[0]='p';//변수 사용 불가능
+	사용 하고 싶을 경우 배열롤 사용
+	*/
+	
+	/*
+	fgets(문자배열명, 배열의 크기, stdin);
+	null까지 입력받는다
+	한 줄전체를 입력 받는다
+	*/
+	
+	ex)
+	#include<stdio.h>
+	int main(){
+	
+ 		//여기에 작성
+		char alpha[6]={'H','E','L','L','O','!'};//배열 입력
+		char c;
+		int i;
+		//printf("찾고 싶은 문제: ");
+	
+		scanf("%c",&c);//문자입력
+	
+		for(i = 0; alpha[i]!='\0';i++){//배열에 null까지 반복
+			if(alpha[i] == c) {//입력한 문자와 같을경우 
+				printf("%d번째\n",i+1);//번째 출력
+				break;//for문 나가기
+			}
+		}
+		return 0;
+	}
+	
+
+	ex)
+	#include <stdio.h>
+	#include <string.h>
+	int main(void) {
+  		char s[10];//배열 선언
+  		int len, i, p=-1;
+  		scanf("%s", s);  // %s 앞에 & 붙이면 안됨!!
+  		len = strlen( s ) ;//len 변수에 s에 문자의 길이를 저장
+  		for( i = 0 ; i < len ; i ++ ) { //len 보다 작으면 끝남 
+          		if( s[i] == 'A'){//문자중에 A가 있을 경우
+              		p = i;
+              		break;//for 문을 나감
+          		}
+  		}
+  		if( p != -1 ) printf("%d번째\n", p+1);//A가 있을 경우 A자리 출력
+  		else printf("not found\n");
+
+  		return 0;
+	}
+	입력 : Apple
+	출력 : 1번째
+	
+	ex2)
+	#include <stdio.h>
+	
+	int main(void) {
+  		char s[10] ;
+  		int i=0, p=-1 ;
+  		scanf("%s", s);  
+  		while( s[i] != '\0' ){\\s[i]번째 문자가  null이 아닐때 동안 반복
+    			if( s[i] == 'A'){
+     				p = i;
+      			break;
+    			}
+    			i++ ;
+  		}
+  		if( p != -1 ) printf("%d번째\n", p+1);
+  		else printf("not found\n");
+  		return 0;
+	}
+	입력 : Apple
+	출력 : 1번째
+
+	2)문자열 함수 string.h
+	strlen(문자여)	|문자열의 길이 반환
+	strcat(문자열1, 문자열2)
+	strcmp(문자열1, 문자열2)	|문자열1>문자열2 :양수
+				|문자열1<문자열2 : 음수
+				|문자열1==문자열2:0
+	strcpy(문자열1, 문자열2)	|문자열1에 문자열2 복사
+
+포인터
+	1.포인터의 개념
+	.대상의 주소를 통해 대상을 가리키는 지시자
+	.주소를 나타내는 자료 또는 그러한 자료형
+	.포인터가 가리키는 데이터의 자료형 정보, 즉 참조 자료형 정보도 가지고 있음
+	1)포인터 변수 선언
+	예)int* a;//a는 int형 포인터 변수이다.자료형* 로 꼭 사용하자
+	
+	2)포인터 연산자
+	-&: Address of-참조(Referencing) 연산자, 대상의 주소를 얻어 오는 연산자
+	    예)a=&b;// 변수 b의 주소를 포인터 변수 a에 저장
+	
+	-*:역참조 연산자. 주소로부터 대상 변수값을 얻어오는 연산자
+	    예) int c=*a;//변수 c는 포인터 변수 a가 가리키는 주소(b의 주소)가 가리키는 값을 의미
+	
+	3)포인터 변수는 *힙* 영역 에 접근하는 동적 변수이다.
+	
+	ex)
+	int a=100;//a의 주소는 4이다
+	int* b;//int형 자료의 주소를 기억하는 포인터 변수
+	b=&a;//포인터 변수 b는 변수 a의 주소 4를 기억
+	printf("%d",*b);
+	
+	메모리
+	  주소
+	  0       |
+	a 4       |100
+	  8       |
+	  12      |
+	~ ~ ~ ~ ~ ~
+	b 50      |4//a의 주소를 저장하고 있다
+	
+	4)메모리 영역
+	
+	메모리
+	
+	---------
+	코드 영역:실행할 프로그램의 코드를 저장
+	-------
+	데이터 영역:전역변수와 정적변수를 저장
+	-------
+	힙 영역:필요에 의해 동적으로 할당되는 영역//런 타임에 크기가 결정됨
+	-------
+	스택 영역:함수의 매개 변수와 지역 변수를 저장//컴파일 타입에 크기가 결정됨
+	-----
+	
+	3).포인터 변수의 용도
+		1.연결된 자료 구조를 구성 및 동적 할당 자료구조 저장
+		2.배열을 인수로 전달
+		3.문자열을 표현
+		4. 커다란 배열에서 요소를 효율적으로 저장하기 위해 사용한다
+		5.메모리에 직접 접근
+		포인터를 매개 변수로 전달하면 호출된 함수에서 호출한 함수의 변수 내용을 변경할 수 있음
+	
+	2.포인터와 배열
+	1)개념
+	배열을 포인터 변수애 저장, 포인터로 배열의 요소에 접근할 수 있다
+
+	int a[5];
+	int* b;
+	b = a;//배열 a의 시작 주소인 a[0] 의 주소를 포인터 변수 b에 저장
+
+	.배열의 이름: 배열의 첫번째 요소의 주소
+	
+	&=배열 요소에 대한 주소를 지정
+	b=&a[2];//배열 a의 세 번째 요소인 a[2]의 주소를 포인터 변수 b에 저장한다
+	.배열의 요소가 포인터인 포인터형 배열을 선언할 수 있다
+
+	a[0]      a[1]    a[2]    a[3]     a[4]      //배열 표기 방법
+	|     |      |      |      |      | 
+	*(a+0) *(a+1) *(a+2) *(a+3) *(a+4)     //*포인터 표기 방법*
+
+	.포인터 변수에 대한 뎃셈, 뺄셈 연산
+	- +,-,++,-- 가능
+	- 값 크기느 포인터 변수가 참조하는 자료형의 크기에 따라 달라짐
+	
+	2)배열의 이름과 주소
+	
+	.배열의 이름은 배열의 시작 주소를 나타내는 포인터/주소 상수
+	.배열이름은 상수이므로 값을 변경할 수 없음
+	.배열 이름은 포인터이므로 + 연산이 가능(연산결과 저장은 안됨) 예)a+1
+	.배열 매개변수
+	-배열을 매개변수로 사용하려면()안에서 매개변수 이름 뒤에 [](대괄호)를 붙이거나 매개변수를 포인터로 지정
+	예) void f(int arr[]또는 int* a)
+	
+	ex)포인터
+	#include<stdio.h>
+
+	int main(){
+	char a[] = {'A','B','C','D','E'};
+	char* p;
+	p = &a[2];//'C'가 위치한 주소를 p에 저장
+	printf("%c, %c\n", *p, *(p-2));
+	}
+	실행: CA
+	
+	ex)포인터이용 swap함수
+	void swap(int* a, int* b){//a,b주소를 a,b포인터에 저장
+		int temp;
+		temp = *a;//변수 a의 값을 temp에 저장한다
+		*a=*b;//b값을 a에 저장한다
+		*b = temp;//temp값을 b에 저장한다
+	}
+	int main(){
+		int a=10, b=20;
+		swap(&a, &b);//a의 주소와 d의 주소를 swap함수에 넘긴다
+		return 0;
+	}//a b 의 값이 서로 바겨있다
+	
+	ex)포인터 변수
+	
+	int a= 5, b, *c;
+	c = &a;//a의 주소를 넘긴다
+	b= ++*c;//c포인터가 a의 값에 들어가 +1을 하고 b에 저장
+	printf("%d",b);
+	
+	출력:6
+
+	ex)포인터 변수	
+
+	int a=10, &b;
+	
+	b=&a;//a변수의 주소를 넘긴다
+	for(int i=0;i<5;i++)
+		*b += i;//a의 값에 i를 더한다
+	printf("%d",*b);
+
+	출력: 20
+
+	ex)포인터 변수
+	
+	int a=31,b,*c,*d;
+	c = &a;
+	d = &b;
+	*d= --*a%3 ? a+a:a*a;
+	printf("%d",*d);
+	
+	출력:900
+
+	ex)포인터 변수
+	
+	int a=5, b=7,c,*d;
+	
+	d = &c;
+	*d = a & b;//(5 AND 7 => 0101 & 0111 => 0101)
+	printf("%d",c);
+	
+	출력:5
+
+	ex)
+	#include <stdio.h>
+	int myStrlen( char* str );//함수 원형 선언
+	int myStrlen2( char* str );//함수 원형 선언
+
+	int main() {
+		char* s=(char*)malloc(100);//(자료형*)malloc(문자 길이); 동적 메모리 할당 포인터를 배열처럼 사용가능
+		char c;
+		//scanf("%s", s );
+		scanf("%s", s);//값을 입력 받는다
+	
+		printf("%d\n", myStrlen(s) ); // 문자 전체의 길이    //myStrlen함수에 s를 보낸다
+		printf("%d\n", myStrlen2(s)); //숫자의 길이           ////myStrlen2함수에 s를 보낸다
+
+		return 0;
+	}
+	int myStrlen( char* str ){	//  문자 길이 구하는 코드    //s값을 시작 주소를 str포인터로 받는다
+		int i, count =0;
+		for(i=0;*(str+i)!='\0';i++){//null이 있을때 동안 반복한다
+			count++;
+		}
+		return count;
+	}
+	int myStrlen2( char* str ){//숫자길이 구하는 코드
+		int i, count =0;
+		for(i=0;*(str+i)!='\0';i++){
+			if(*(str+i)>='0'&&*(str+i)<='9'){
+				count++;
+			}
+		}
+		return count;
+	}
+
+	입력: apple1
+	출력:  6
+	     1
+	
+	ex)
+	
+	#include <stdio.h>
+	int myStrlen( char str[] );
+	int myStrlen2( char str[] );
+	int myStrlen3( char str[] );  
+	int myStrlen4( char str[], char c );  
+	int main() {
+		char s[100];
+		//scanf("%s", s );
+		fgets(s,100,stdin);
+		printf("%d\n", myStrlen(s) ); // 문자 전체의 길이
+		printf("%d\n", myStrlen2(s)); //숫자의 길이
+  		printf("%d\n", myStrlen3(s));// 공백제외 문자길이
+  		printf("%d\n", myStrlen4(s, 'H'));  // 특정문자의 길이
+
+		return 0;
+	}
+	int myStrlen( char str[] ){	//  문자 길이 구하는 코드
+		int i, count =0;
+		for(i=0;str[i]!='\0';i++){
+			count++;
+		}
+		return count-1;//fgets함수에는 \n이 포함 되어 있으므로 -1을 해야 한다
+	}
+	int myStrlen2( char str[] ){//숫자길이 구하는 코드
+		int i, count =0;
+		for(i=0;str[i]!='\0';i++){
+			if(str[i]>='0'&&str[i]<='9'){
+				count++;
+			}
+		}
+		return count;
+	}
+	int myStrlen3( char str[] ){//  공백제외 문자길이 구하는 코드
+		int i, count =0;
+		for(i=0;str[i]!='\0';i++){
+			if(str[i]==' '){
+				count++;
+			}
+		}
+		return count;
+	}
+	int myStrlen4( char str[],char c ){// 특정문자의 길이를 반환 코드
+		int i, count =0;
+		for(i=0;str[i]!='\0';i++){
+			if(str[i]==c){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	입력:apple
+	출력:5
+	    0
+	    0
+	    0
+
+	
+포인터와 문자열(2)
+	1.문자열을 저장하는 배열과 포인터의 차이
+	
+	구분                char 포인터                        char qoduf 
+	
+	초기화            char* pc="mongo";       char str[80]="mango";
+	
+	대입               pc="banana";                     strcpy(str,"banana");
+	
+	크기               sizeof(pc)=>8바이트          sizeof(str)=>80바이트
+	
+	수정               pc[0]='t';(X)
+		   *(pc+0)='t';(X)         str[0]='t';(O)
+		   문자열 상수이므로 변경X
+	
+	입력              scanf("%s",pc);(X)      scanf("%s",str);(O)
+
+
+	2.문자열 연산함수
+	
+	#include<string.h>  //string.h함수를 이용하여 문자열 연산함수 사용가능
+	
+	strlen(문자여)	|문자열의 길이 반환
+	strcat(문자열1, 문자열2)
+	strcmp(문자열1, 문자열2)	|문자열1>문자열2 :양수
+				|문자열1<문자열2 : 음수
+				|문자열1==문자열2:0
+	strcpy(문자열1, 문자열2)	|문자열1에 문자열2 복사
+
+
+	(size_t 자료형: unsigned int를 재정의)
+	-size_t strlen(const char* str)//문자열 길이 구함
+	
+	ex)strlen
+	#include<stdio.h>
+
+	size_t myStrlen(const char *str);
+	
+	int main(void){
+		char s[] = "hello";
+		printf("%d\n",myStrlen(s));
+		return 0;
+	}
+	
+	size_t myStrlen( const char *str){
+		char *s;
+		for(s=str; *s; s++){
+			printf("%8X\n",s);
+		}
+		printf("%8X\n",s);
+		printf("s=%8X, str=%8X \n",s,str);
+
+		return s-str;
+	}
+	
+	출력:
+	61FE1A
+  	61FE1B
+  	61FE1C
+  	61FE1D
+  	61FE1E
+  	61FE1F//주소
+	s=  61FE1F, str=  61FE1A
+	5//문자의 길이
+	
+	pointer(포인터)
+	주소를 (address)를 저장하는 변수
+	포인터 변수의 선언
+	자료형      포인터 변수 이름      NULL포인터 설정
+	int*            pointer    =     NULL;
+	
+	ex)
+	#include<stdio.h>
+
+	int main()
+	{
+		char *s="world";
+		int i;
+		printf("%08X %08X %08X  %s\n", &s, s, &s[0], s);\\포인터 주소, 첫번째 주소 ,0번째 값주소, 단어
+		for(i=0;s[i]!='\0'; i++)
+			printf("%08X %c\n", &s[i],s[i]);
+		return 0;
+	}
+	출력:
+	0061FE10 00404000 00404000  world
+	00404000 w
+	00404001 o
+	00404002 r
+	00404003 l
+	00404004 d
+
+	값에 의한 호출
+	swap( x   , y)
+	      |     |
+	swap(int a, int b)//호출한 곳의 값이 바뀌지 않는다
+
+	주소에 의한 호출
+	swap(&x, &y)
+	     ||  ||
+	swap(*a,*b)///호출한 곳의 값이 바뀐다
+
+	배열은 포인터이다
+	배여표현     포인터표현
+	ary[0] == *(ary+0);
+	포인터는 4바이트씩 증가한다
+	
+	배열명은 포인터
+	ary == &ary[0]
+	
+	ex)
+	#include<stdio.h>
+	void outputArray( int* p, int n);
+	
+	int main(){
+		int array[3] = { 10, 20, 30};
+		int size = sizeof(array) / sizeof(array[0]);//배열 길이 구하기
+		outpurtArray(array, size);//함수 호출
+	}
+	void outputArray(int* p, int n){
+		int i;
+		for(i=0;i<n;i++){
+			printf("%d %d\n",p[i], *(p+i));//p[i]==*(p+i)
+		}
+	}
+	출력:
+	10 10
+	20 20
+	30 30
+
+메모리 동적 할당
+	메모리 동적 할당(dynamic allocation)
+	프로그램이 실행되는 중에 필요한 만큼 저장공간을 메모리 힙영역에 할당하는 것
+	
+	#include<stdlib.h>사용
+	-malloc 함수
+	**사용예: int* i=(int*)malloc(sizeof(int));**
+	.메모리 크기를 바이트 단의로 할당
+	.값들이 쓰레기값이 들어감
+	.힙 영역에 할당할 수 있는 적당한 블록이 없을 때애는 널 포인터를 반환
+	.void포인터를 반환하여 개발자가 알맞은 용도로 변환하여 사용할 수 있도록 만든 것
+	원형: void* malloc(unsigned int size)
+	기능: size바이트 수 만큼 할당하고 시작위치 변환 할당실패시 널 포인터 반환
+	사용예: int* p=(int*)malloc(sizeof(int));
+
+	-calloc함수
+	.메모리 크기를 바이트 단의로 할당
+	.size 크기를 데이터 개수만큼 할당
+	.0으로 초기화(배열 사용시 편리)
+	원형:void* calloc(unsigned int count, unsigned int size)
+	기능:(cont * size)바이트수만큼 할당하고 0으로 초기화 후 시작 위치 변환
+	사용예:double* p=(double*)calloc(5, sizeof(double));
+
+	free함수
+	.힙 영역에 할당받은 메모리 공간을 다시 운영체제로 반환해 주는 함수
+	.사용시 끝난 메모리를 해제하지 않아서 메모리 부족 현상이 메모리 누수(memory leak)
+	원형:void free(void *p);
+	기능:p가 연결한 영역 반환
+	
+	ex)		
+	#include <stdio.h>
+	#include <stdlib.h>
+	int maxh(int* h, int n) {
+	int i ;
+	int max =*(h+0);
+	for(i=1;i<n;i++){
+		if(*(h+i)>max) max = *(h+i);
+	}
+	//for문을 이용하여 최대값 검색 
+	return max;
+	}
+	int main(){
+  	int n ;
+  	int* h;
+  	int i ;
+	scanf("%d", &n) ;
+	
+	h = (int*)malloc(sizeof(int)*n);//메모리 동적할당 
+	// n개의 데이터 입력 저장
+	for(i=0;i<n;i++){
+		scanf("%d",h+i);
+	}
+	printf("%d\n", maxh(h, n)) ;
+	
+	free(h);
+  	return 0; 
+	}
+	입력:5
+	160 171 180 162 165
+	출력
+	180
+
+	ex)
+	#include <stdio.h>
+	#include <stdlib.h>
+ 	int main(){
+    	int a,b,i;
+    	char* str= (char*)malloc(sizeof(char)*101);//char str[100]의 의미
+	 
+    	scanf("%s",str);
+    	scanf("%d %d",&a,&b);
+    	//출력부분 작성하시오.
+	 /* 
+	 for(int i=a-1;i<=b-1;i++){
+			printf("%c",*(str+i));
+		}
+		*/
+		*(str+b)='\0';
+	 printf("%s",str+a-1);
+    	return 0;
+	}
+	
+	입력
+	abcdefg
+	2 4
+	출력
+	bcd
+
+2차원 배열
+	다차원 배열
+	행과 열로 이루어짐(1,2 차원)
+	
+	2,3차원 배열
+	행 열과 면으로 이루어진 배열
+	
+	배열의 논리적 주도와 물리적 구조
+	행 우선 순서(row major order)	
+	열 우선 순서(column major order)	
+
+	배열의 초기화
+	int array[4][3]={{3,2}},{3},{4},{5}};
+	배열:
+	3 | 2 | 
+	3 |   |
+	4 |   | 
+	5 |   |
+
+	ex)
+	#include <stdio.h>
+
+	void inputArray(int a[][4], int r){
+	int i, j;
+	for(i=0;i<3;i++)
+		for(j=0;j<4;j++)
+			scanf("%d", &a[i][j]);
+	}
+	int main(){
+	int score[3][4];
+	int i, j;
+	int tot;
+	double avg;
+	//printf("학생 3명, 각각 네 과목의 점수를 입력하세요\n");
+	inputArray(score,3);
+	
+	for(i=0;i<3;i++){
+		tot=0;
+		for(j=0;j<4;j++){
+			tot+=score[i][j];
+		}
+		printf("총점 : %d, 평균 : %.2f\n",tot,(float)tot/4);
+	}
+	return 0;
+	}
+	
+	입력:78 85 71 58
+	90 75 83 64
+	85 72 82 94
+	출력:총점 : 292, 평균 : 73.00
+	총점 : 312, 평균 : 78.00
+	총점 : 333, 평균 : 83.25
+	// 예제3 2차원 배열 입력 & 출력 코드를 완성하여 실행해 보자.
+	/*
+
+	ex)
+	void inputArray( int a[][3], int r){
+	int i, j;
+	for(i=0; i<r;i++)
+		for(j=0;j<3;j++)
+			scanf("%d",&a[i][j]);
+	}
+	void outputArray( int a[][3], int r){
+	int i, j;
+	for(i=0; i<r;i++){
+		for(j=0;j<3;j++){
+			printf("%d", a[i][j]);
+		}
+		printf("\n");
+	}
+	}
+
+	int main(){
+	int array[4][3];
+	int row = 4;
+	
+	inputArray( array, row );
+	outputArray( array, row );
+	}
+	입력:1 1 1 1
+	1 1 1
+	1 1 1
+	1 1 1
+	출력:1 1 1
+	1 1 1
+	1 1 1
+	1 1 1
+
+	ex)
+	#include<stdio.h>
+	int main(){
+ 	//int 는 4byte
+    	int i,j, a[2][3]={{10,20,30},{40,50,60}};
+    	printf("배열전체의 크기 : %d\n",sizeof(a));
+    	printf("배열요소의 개수 : %d\n",sizeof(a)/sizeof(int));
+		printf("%d\n", &a[1][0]-&a[0][0]);//3칸 떨어져 있음
+    	printf("배열요소의 값\n"); 
+  
+	for(i=0;i<=1;i++){
+		for(j=0;j<=2;j++){
+			printf("%d %8X", a[i][j], &a[i][j]);
+		}
+		printf("\n");
+	}
+	
+	return 0;
+	}
+
+	출력:
+	배열전체의 크기 : 24	
+	배열요소의 개수 : 6
+	3
+	배열요소의 값
+	10   61FE0020   61FE0430   61FE08
+	40   61FE0C50   61FE1060   61FE14
+
+2차원 배열 포인터
+	2차원 배열을 가리키는 배열 포인터 지정
+	int (*numPtr)[4]
+	{a,b,c,d}
+	
+	자료형(*포인터이름)[열의 크기];
+
+	괄호가 없으면 포인터 값을 저장하는 포인터들의 배열
+	
+	int *ptr[4] //int 형 포인터 값 4개를 저장하는 배열
+	
+	int a,b,c,d;
+	int *ptr[4] = {&a, &b,&c ,&d};
+
+	ex)
+	#include <stdio.h>
+	#include <assert.h>
+	//예제1번, 2번을 실행하여 확인하고,주석처리하시오.
+	//문제해결 - 2차원 배열 포인터를 이용하여 주대각선 성분을 출력하시오.
+
+	int main(){
+    	int matrix[8][8] = {
+        {  1,  2,  3,  4,  5,  6,  7,  8 },
+        {  9, 10, 11, 12, 13, 14, 15, 16 },
+        { 17, 18, 19, 20, 21, 22, 23, 24 },
+        { 25, 26, 27, 28, 29, 30, 31, 32 },
+        { 33, 34, 35, 36, 37, 38, 39, 40 },
+        { 41, 42, 43, 44, 45, 46, 47, 48 },
+        { 49, 50, 51, 52, 53, 54, 55, 56 },
+        { 57, 58, 59, 60, 61, 62, 63, 64 }
+    	};
+	int (*a)[8]=matrix;
+	
+	for(int i=0;i<=7;i++){
+		printf("%d ", a[i][i]);
+	}
+    	//이차원 배열 포인터 선언
+    	//여기에 출력 코드 작성
+    	return 0;
+	}
+	출력:1 10 19 28 37 46 55 64
+	
+	포인터 2차원 배열 출력
+	*(p+0)+0
+
+행열
+
+#include <stdio.h>
+
+void inputArray( int a[][3], int r);
+void outputArray( int a[][3], int r);
+void addMatrix( int a[][3], int b[][3], int r);
+void subMatrix( int a[][3], int b[][3], int r);
+void scalarMul( int a[][3], int r, int n);
+
+int main() {
+	int A[2][3], B[2][3];
+	int row=2, col=3;
+	int num ;
+	printf("2*3 행렬의 각 원소의 값을 입력하시오.\n");
+	inputArray(A, row);
+	inputArray(B, row);
+	printf("행렬 A, B\n");
+	outputArray(A, row);
+	outputArray(B, row);
+	
+	printf("행렬합 \n");
+	addMatrix( A, B, row );
+	printf("행렬차 \n");
+	subMatrix( A, B, row );
+	
+	printf("곱할 정수 입력\n");
+	scanf("%d", &num);
+	scalarMul( A, row, num);
+	
+	return 0;
+}
+void inputArray( int a[][3], int r){
+    int i, j;
+    //r행 3열을 입력받는 코드를 작성
+	for(i=0;i<r;i++){
+		for(j=0;j<3;j++){
+			scanf("%d",&a[i][j]);
+		}
+	}
+}
+void outputArray( int a[][3], int r){
+    int i, j;
+  for(i=0;i<r;i++){
+		for(j=0;j<3;j++){
+			printf("%5d", a[i][j]);
+		}
+		printf("\n");
+	}
+}
+void addMatrix( int a[][3], int b[][3], int r){
+	for(int i=0;i<r;i++){
+		for(int j=0;j<3;j++){
+			printf("%5d",a[i][j]+b[i][j]);
+		}
+		printf("\n");
+	}
+}
+void subMatrix( int a[][3], int b[][3], int r){
+	for(int i=0;i<r;i++){
+		for(int j=0;j<3;j++){
+			printf("%5d",a[i][j]-b[i][j]);
+		}
+		printf("\n");
+	}
+}
+void scalarMul( int a[][3], int r, int n){
+	for(int i=0;i<r;i++){
+		for(int j=0;j<3;j++){
+			printf("%5d",a[i][j]*n);
+		}
+		printf("\n");
+	}
+}
+
+입력:
+1 1 1
+1 1 1
+2 2 2
+2 2 2
+출력:
+행렬 A, B
+    1    1    1
+    1    1    1
+    2    2    2
+    2    2    2
+행렬합 
+    3    3    3
+    3    3    3
+행렬차 
+   -1   -1   -1
+   -1   -1   -1
+곱할 정수 입력
+
+
+구조체
+	구조체(structure):타입이 다른 데이터를 하나로 묶는 방법
+	struct exaple{
+		char cfield;
+		int ifield;
+	};
+	struct example s1;
+	
+	구조체의 개념
+	
+	여러 자료형의 연속된 변수들로 구성된 집합체
+	-주로 전역변수로 선언
+	
+	구조체 구조
+	-구조체는 하나 이상의 멤버변수로 구성
+	-각 멤버변수들은 서로 다른 자료형을 가질 수 있음
+	
+	구조체 사용
+	-구조체의 정의:struct 키워드를 이용
+	-구조체 변수를 선언할 때는 구조체 키워드가 형 지정자가 됨
+	-**구조체 변수의 멤버에 접근 할때는 (.) 연산자 사용**
+	-**구조체 포인터로 멤버에 접근할 때는 (->)연산자 사용**
+
+	typedef으로 struct 키워드없이 구조체 선언하기
+	
+	typedef
+	-기존에 존제하는 자료형에 새로운 이름을 부여하는것 (예) typedef int size_t)
+	
+	typedef로 구조체 자료형에 이름부여
+	
+	3. 구조체 자료형 정의 및 정의 및 변수 선언 방법(3가지)
+	
+	1)struct 로 정의
+	struct Student{
+		int id;
+		char *name;
+		char major[20];
+	};
+	
+	2)typedef struct 구조체 이름
+	typedef struct Student{
+		int id;
+		char *name;
+		char major[20];
+	}st;
+	
+	3)typedef struct:익명
+	typedef struct {
+		int id;
+		char *name;
+		char major[20];
+	} Student;
+
+	3번째 방식을 가장 많이 사용
+	
+	구조체 초기화	
+	
+	구조체명 구조체변수명={값1,값2,값2..}
+	
+	typedef struct student{
+		int id;
+		char *pname;
+		double points;
+	} STUD;
+	
+	STUD s1 = {1, "Choi", 9,9};//초기화
+
+	ex)
+	#include<stdio.h>
+	#include<string.h>
+
+	#define NUM 3
+	//전역에 구조체 정의
+	typedef struct{
+	char name[10];
+	int age;
+	}PERSON;
+
+	void inputData( PERSON *p );
+	void outputData( PERSON *p );
+
+	int main(){
+	//구조체 포인터 배열 선언
+	PERSON p[3];
+	int i;
+	
+	for(int i=0;i<=2;i++){
+		inputData(p+i);
+	}
+	
+	for(int i=0;i<=2;i++){
+		outputData(&p[i]);
+	}
+		return 0;
+	}
+	void inputData( PERSON *p ){
+	  //구조체포인터 변수에 입력
+	scanf("%s",p->name);
+	scanf("%d",&p->age);
+	}
+	void outputData( PERSON *p ){
+		//구조체포인터 변수에 출력
+	printf("%s",p->name);
+	printf(", %d\n", p->age);
+	} 
+	입력
+	김삼수, 17
+	홍길동, 20
+	박덕수, 25
+	출력
+	김삼수, 17
+	홍길동, 20
+	박덕수, 25
+	
+	
+	
