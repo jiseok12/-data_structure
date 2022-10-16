@@ -1,0 +1,78 @@
+구조체의 개념
+	여러 자료형의 연속된 변수들로 구성된 집합체
+	-주로 전역변수 선언
+
+	#include<stdio.h>
+	#include<string.h>
+	struct Person{
+		char name[10];
+		int age;
+	};
+	int main(){
+		struct Person p;
+		scanf("%s", p.name);
+		scanf("%d", &p.age);
+	
+		printf("%s, %d\n", p.name, p.age);
+		return 0;
+	}
+	
+	typedef으로 struct 키워드없이 구조체 선언하기
+	
+	1.스트럭처 정의
+	typedef struct  student{//자료형 생성
+		int id;
+		char *name;
+	} st;
+
+	선언 st student[];
+
+	st student[3];일경우
+
+	{ 
+	int id;
+	char *name;
+	}
+	공간을 3개 만든다.
+
+	typedef strct{ //익명 으로 사용
+		int id;
+		char *name;
+	}Student;
+	
+//////////////////////////////////////////
+구조체 포인터2
+	구조체 변수에 대한 할당(Assignment)연산
+		실제 값들의 메모리의 내용이 모두 복사
+		-자료형에 대한 대입 연산을 지원하지 않음
+	
+	6.구조체 포인터
+		.구조체도 포인터를 선언할 수 있음
+		.구조체 포인터에는 malloc 함수를 
+		사용하여 종적 메모리를 할당 가능 
+		(int a;처럼 사용가능)
+	.구조체 포인터의 멤버에 접근 -> (화살표 연산자)를 사용
+	
+		
+	#include<stdio.h>
+	#include<string.h>
+	typedef struct Person{
+    		char name[10];
+    		int age;
+	}PERSON;
+
+	int main(){
+    		PERSON* p = malloc(sizeof(PERSON));
+		//char name[10]과 int age; 바로 사용 가능 
+		//배열은 malloc(sizeof(PERSON)*열)
+    		scanf("%s", p->name ); //->화살표 연산자 사용
+    		scanf("%d", &p->age );
+    		printf("%s, %d\n", p->name, p->age);
+    		free(p);
+    		return 0;
+	}
+	
+	int (*p)[5];
+	
+	(*d2).c1 = d2->c1
+	
