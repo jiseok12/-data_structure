@@ -1,0 +1,34 @@
+	-------------------------------------
+	stack 은 LiFo구조(Last in First out)
+	을 위해 
+	top이 필요
+	push 입력,pop 빼기 스택에 추상화 타입 
+	스택 ADT: 정의 하는것
+	-------------------------------------
+큐의 개념 및 특징
+	큐: 대기열, 줄지은 것
+	선입선출(FIFO, First in first out)방식의 자료구조
+	큐는 한쪽 끝에서 삽입 작업, 다른 쪽에서 삭제 작업이 이뤄짐
+	인 큐(enQueue): 삽입 연산
+	디 큐(dnQueue)삭제 연산
+	empty 상태
+	full 상태
+	front:삭제 할 위치를 가리킴
+	rear:삽입 할 위치를 가리킴
+	
+	front - | A | b | C | D |   -rear
+
+	front와 rear은 초기값이 같다(-1)
+	rear이 먼져 증가한다
+	front 자리는 값이 비어 있다
+	
+	front와 rear이 같은 상태는 공백상태이다
+	
+원형 큐
+	초기화가 0
+	마지막 인덱스이면 full이다
+	Front자리는 데이터가 없다
+	Front와 rear이 같이 있다면 empty이다
+	앞부분의 데이터가 비어 있어도 자료를 추가 할수없는것을 해결
+	자료입력시:rear값에(rear+1)%n을 더한다
+	자료 삭제:front 값에(front+1
