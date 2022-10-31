@@ -1,0 +1,26 @@
+연결리스트
+node1           node2          node3
+*data(next주소) 200주소               30주소
+|10  |200 | -> |20  |30  | -> |40  |NULL|
+
+typedef struct Node{
+	int data;
+	struct Node* next;//내가 만들고 있는 주소를 저장 하기 위해 사용
+}Node;
+
+Node* p;//정의
+node두번째를 가르키면 
+p=p->next;
+//다음 주소를 가리킨다
+
+시험
+
+원형연결리스트
+head
+| 3 |-|--> | 2 |-|--> | 1 |-|--> | 0 |-|-> 처음 주소로 이동
+
+처음 위치(first)                   마지막(last)
+head->next                       head
+| 3 |-|--> | 2 |-|--> | 1 |-|--> | 0 |-|-> 처음 주소로 이동
+원형연결리스트는 마지막이 head이고 처음 위치가 head->next이다
+
